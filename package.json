@@ -1,0 +1,34 @@
+{
+  "name": "vsf-payment-stripe",
+  "version": "1.0.71",
+  "description": "A Stripe extension built for vue-storefront, by Develo Design.",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/develodesign/vsf-payment-stripe.git"
+  },
+  "keywords": [
+    "vue-storefront-stripe",
+    "vsf-payment-stripe",
+    "develodesign/vue-storefront-stripe",
+    "develodesign",
+    "vue-storefront",
+    "divanteltd/vue-storefront"
+  ],
+  "author": "Mike Sheward <mike@develodesign.co.uk> (https://www.develodesign.co.uk)",
+  "maintainers": [
+    "Luke Collymore <luke@develodesign.co.uk> (https://www.develodesign.co.uk)",
+    "Mike Sheward <mike@develodesign.co.uk> (https://www.develodesign.co.uk)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/develodesign/vsf-payment-stripe/issues"
+  },
+  "homepage": "https://github.com/develodesign/vsf-payment-stripe#readme"
+}

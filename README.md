@@ -12,13 +12,14 @@ $ npm install vsf-payment-stripe --save
 Add `vsf-payment-stripe` to the  `extensions/index.js`
 ```js
 export default [
-  require('src/extensions/custom_extension/index.js').default,
-  require('src/extensions/payment-cash-on-delivery/index.js').default,
-  require('src/extensions/payment-backend-methods/index.js').default,
-  require('src/extensions/mailchimp-subscribe/index.js').default,
-  require('src/extensions/google-analytics/index.js').default,
+  require('@vue-storefront/extension-droppoint-shipping/index.js'),
+  require('@vue-storefront/extension-google-analytics/index.js'),
+  require('@vue-storefront/extension-mailchimp-subscribe/index.js'),
+  require('@vue-storefront/extension-payment-backend-methods/index.js'),
+  require('@vue-storefront/extension-payment-cash-on-delivery/index.js'),
+  require('@vue-storefront/extension-template/index.js'),
 
-  require('vue-storefront-stripe/index.js').default
+  require('vsf-payment-stripe/index.js')
 ]
 ```
 

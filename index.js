@@ -20,8 +20,7 @@ export default function (app, router, store, config) {
     'cost': 0,
     'costInclTax': 0,
     'default': false,
-    'offline': false,
-    'api_key': app.$store.state.config.stripe
+    'offline': false
   }
 
   app.$store.state.payment.methods.push(paymentMethodConfig)

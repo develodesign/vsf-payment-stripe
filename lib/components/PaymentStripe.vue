@@ -112,11 +112,11 @@ export default {
     configureStripe () {
       // Create a new Stripe client.
 
-      if (typeof this.$config.stripe.api_key === 'undefined') {
+      if (typeof this.config === 'undefined' || typeof this.config.api_key === 'undefined') {
         return false
       }
 
-      this.dd_stripe.instance = window.Stripe(this.$config.stripe.api_key)
+      this.dd_stripe.instance = window.Stripe(this.config.api_key)
 
       // Create an instance of Elements.
       this.dd_stripe.elements = this.dd_stripe.instance.elements()
@@ -130,8 +130,8 @@ export default {
     createElements () {
       let style = {}
 
-      if (typeof this.$config.stripe.style !== 'undefined') {
-        style = this.$config.stripe.style
+      if (typeof this.config.style !== 'undefined') {
+        style = this.config.style
       }
 
       // Create an instance of the card Element.

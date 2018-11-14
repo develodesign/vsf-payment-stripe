@@ -13,7 +13,6 @@ export default function (app, router, store, config) {
   app.$on('application-after-init', () => {
     console.log(EXTENSION_KEY + ' extension initialised')
   })
-
   // Add this payment method to the config.
   let paymentMethodConfig = {
     'name': 'Stripe',
@@ -21,7 +20,8 @@ export default function (app, router, store, config) {
     'cost': 0,
     'costInclTax': 0,
     'default': false,
-    'offline': false
+    'offline': false,
+    'api_key': app.$store.state.config.stripe
   }
 
   app.$store.state.payment.methods.push(paymentMethodConfig)
@@ -31,6 +31,7 @@ export default function (app, router, store, config) {
     if (paymentMethodCode === 'stripe') {
       const Component = Vue.extend(StripeComponent)
       const componentInstance = (new Component())
+      componentInstance.config = app.$store.state.config.stripe
       componentInstance.$mount('#checkout-order-review-additional')
     }
   })

@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted () {
-    this.configureStripe();
+    this.configureStripe()
 
     // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
     this.$bus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
@@ -60,12 +60,12 @@ export default {
       this.processStripeForm()
     },
     configureStripe () {
-      if (typeof this.config === 'undefined' || typeof this.config.stripe.apiKey === 'undefined') {
+      if (!config.hasOwnProperty('stripe') || typeof config.stripe.apiKey === 'undefined') {
         return false
       }
 
       // Create a new Stripe client.
-      this.stripe.instance = window.Stripe(this.config.apiKey)
+      this.stripe.instance = window.Stripe(config.apiKey)
 
       // Create an instance of Elements.
       this.stripe.elements = this.stripe.instance.elements()
@@ -77,7 +77,7 @@ export default {
       this.bindEventListeners()
     },
     createElements () {
-      let style = (typeof this.config.stripe.style !== 'undefined') ? this.config.stripe.style : {}
+      let style = (typeof config.stripe.style !== 'undefined') ? config.stripe.style : {}
 
       // Create an instance of the card Element.
       this.stripe.card = this.stripe.elements.create('card', { style: style })
@@ -106,7 +106,7 @@ export default {
       this.$bus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
 
       // Generate token from stripe
-      this.stripe.instance.createToken(this.stripe.card).then(function (result) {
+      this.stripe.instance.createToken(this.stripe.card).then((result) => {
         if (result.error) {
           // Inform the user if there was an error.
           let errorElement = document.getElementById('vsf-stripe-card-errors')

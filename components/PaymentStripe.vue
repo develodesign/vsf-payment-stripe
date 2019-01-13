@@ -26,40 +26,6 @@
 
 </template>
 
-<style scoped>
-  /* Base styling for the component. */
-
-  .vsf-stripe-container label {
-    font-weight: 500;
-    font-size: 14px;
-    display: block;
-    margin-bottom: 8px;
-    color: #818992;
-  }
-  #vsf-stripe-card-errors {
-    margin: 8px auto 0;
-    color: #fa755a;
-  }
-  .vsf-stripe-container .StripeElement {
-    background-color: white;
-    padding: 10px 12px;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
-  }
-  .vsf-stripe-container .StripeElement--focus {
-    box-shadow: 0 1px 3px 0 #cfd7df;
-  }
-  .vsf-stripe-container .StripeElement--invalid {
-    border-color: #fa755a;
-  }
-  .vsf-stripe-container .StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
-  }
-</style>
-
 <script>
 import i18n from 'core/lib/i18n'
 
@@ -185,3 +151,42 @@ export default {
   components: {}
 }
 </script>
+
+<style lang="scss" scoped>
+
+  .vsf-stripe-container {
+    label {
+      font-weight: 500;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+      color: #818992;
+    }
+
+    .StripeElement {
+      background-color: white;
+      padding: 10px 12px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      box-shadow: 0 1px 3px 0 #e6ebf1;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+    }
+
+    .StripeElement--focus {
+      box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+
+    .StripeElement--invalid {
+      border-color: #fa755a;
+    }
+
+    .StripeElement--webkit-autofill {
+      background-color: #fefde5 !important;
+    }
+  }
+  #vsf-stripe-card-errors {
+    margin: 8px auto 0;
+    color: #fa755a;
+  }
+</style>

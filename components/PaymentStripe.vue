@@ -77,11 +77,7 @@ export default {
       this.bindEventListeners()
     },
     createElements () {
-      let style = {}
-
-      if (typeof this.config.style !== 'undefined') {
-        style = this.config.style
-      }
+      let style = (typeof this.config.stripe.style !== 'undefined') ? this.config.stripe.style : {}
 
       // Create an instance of the card Element.
       this.stripe.card = this.stripe.elements.create('card', { style: style })
@@ -104,10 +100,10 @@ export default {
       this.stripe.card.removeEventListener('change', this.onStripeCardChange)
     },
     processStripeForm () {
-      let ctx = this
+      let self = this
 
       // Display loader
-      this.$bus.$emit('notification-progress-start', i18n.t('Placing Order') + '...')
+      this.$bus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
 
       // Generate token from stripe
       this.stripe.instance.createToken(this.stripe.card).then(function (result) {
@@ -117,9 +113,9 @@ export default {
 
           errorElement.textContent = result.error.message
         } else {
-          ctx.placeOrderWithPayload(result.token)
+          self.placeOrderWithPayload(result.token)
         }
-        ctx.$bus.$emit('notification-progress-stop')
+        self.$bus.$emit('notification-progress-stop')
       })
     },
     placeOrderWithPayload (payload) {

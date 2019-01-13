@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import config from 'config'
 import i18n from '@vue-storefront/i18n'
 
 export default {
@@ -59,12 +60,12 @@ export default {
       this.processStripeForm()
     },
     configureStripe () {
-      if (typeof this.config === 'undefined' || typeof this.config.api_key === 'undefined') {
+      if (typeof this.config === 'undefined' || typeof this.config.stripe.apiKey === 'undefined') {
         return false
       }
 
       // Create a new Stripe client.
-      this.stripe.instance = window.Stripe(this.config.api_key)
+      this.stripe.instance = window.Stripe(this.config.apiKey)
 
       // Create an instance of Elements.
       this.stripe.elements = this.stripe.instance.elements()

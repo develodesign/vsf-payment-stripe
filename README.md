@@ -43,15 +43,20 @@ export default {
     ...
     PaymentStripe
   },
+  data () {
+    return {
+      payment: this.$store.state.checkout.paymentDetails
+    }
+  },
 ```
 
-Add to template `<payment-stripe />`
+Then need add component instance before `<div id="checkout-order-review-additional-container">` to template section
 
 ```html
-<div class="cartsummary-wrapper">
-    ...
-    <payment-stripe />
-</div>
+...
+<payment-stripe v-if="payment.paymentMethod === 'stripe'" />
+<div id="checkout-order-review-additional-container">
+...
 ```
 
 ## Customization

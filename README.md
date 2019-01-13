@@ -1,4 +1,4 @@
-# Stripe Payment extension for Vue Storefront
+# Stripe Payment module for Vue Storefront
 
 Stripe Payment extension for [vue-storefront](https://github.com/DivanteLtd/vue-storefront), by [Develo Design](https://develodesign.co.uk).
 

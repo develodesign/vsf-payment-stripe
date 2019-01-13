@@ -27,13 +27,14 @@
 </template>
 
 <script>
+import config from 'config'
 import i18n from '@vue-storefront/i18n'
 
 export default {
   name: 'PaymentStripe',
   data () {
     return {
-      dd_stripe: {
+      stripe: {
         instance: null,
         elements: null,
         card: null
@@ -59,15 +60,15 @@ export default {
       this.processStripeForm()
     },
     configureStripe () {
-      if (typeof this.config === 'undefined' || typeof this.config.api_key === 'undefined') {
+      if (typeof this.config === 'undefined' || typeof this.config.stripe.apiKey === 'undefined') {
         return false
       }
 
       // Create a new Stripe client.
-      this.dd_stripe.instance = window.Stripe(this.config.api_key)
+      this.stripe.instance = window.Stripe(this.config.apiKey)
 
       // Create an instance of Elements.
-      this.dd_stripe.elements = this.dd_stripe.instance.elements()
+      this.stripe.elements = this.stripe.instance.elements()
 
       // Create the stripe elements card
       this.createElements()
@@ -83,14 +84,14 @@ export default {
       }
 
       // Create an instance of the card Element.
-      this.dd_stripe.card = this.dd_stripe.elements.create('card', { style: style })
+      this.stripe.card = this.stripe.elements.create('card', { style: style })
 
       // Add an instance of the card Element into the `card-element` <div>.
-      this.dd_stripe.card.mount('#vsf-stripe-card-element')
+      this.stripe.card.mount('#vsf-stripe-card-element')
     },
     bindEventListeners () {
       // Handle real-time validation errors from the card Element.
-      this.dd_stripe.card.addEventListener('change', this.onStripeCardChange)
+      this.stripe.card.addEventListener('change', this.onStripeCardChange)
     },
     onStripeCardChange (event) {
       let displayError = document.getElementById('vsf-stripe-card-errors')
@@ -100,7 +101,7 @@ export default {
       this.unbindEventListeners()
     },
     unbindEventListeners () {
-      this.dd_stripe.card.removeEventListener('change', this.onStripeCardChange)
+      this.stripe.card.removeEventListener('change', this.onStripeCardChange)
     },
     processStripeForm () {
       let ctx = this
@@ -109,7 +110,7 @@ export default {
       this.$bus.$emit('notification-progress-start', i18n.t('Placing Order') + '...')
 
       // Generate token from stripe
-      this.dd_stripe.instance.createToken(this.dd_stripe.card).then(function (result) {
+      this.stripe.instance.createToken(this.stripe.card).then(function (result) {
         if (result.error) {
           // Inform the user if there was an error.
           let errorElement = document.getElementById('vsf-stripe-card-errors')

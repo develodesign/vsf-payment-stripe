@@ -59,12 +59,11 @@ export default {
       this.processStripeForm()
     },
     configureStripe () {
-      // Create a new Stripe client.
-
       if (typeof this.config === 'undefined' || typeof this.config.api_key === 'undefined') {
         return false
       }
 
+      // Create a new Stripe client.
       this.dd_stripe.instance = window.Stripe(this.config.api_key)
 
       // Create an instance of Elements.
@@ -95,12 +94,7 @@ export default {
     },
     onStripeCardChange (event) {
       let displayError = document.getElementById('vsf-stripe-card-errors')
-
-      if (event.error) {
-        displayError.textContent = event.error.message
-      } else {
-        displayError.textContent = ''
-      }
+      displayError.textContent = event.error ? event.error.message : ''
     },
     beforeDestroy () {
       this.unbindEventListeners()
@@ -130,8 +124,7 @@ export default {
     placeOrderWithPayload (payload) {
       this.$bus.$emit('checkout-do-placeOrder', payload)
     }
-  },
-  components: {}
+  }
 }
 </script>
 

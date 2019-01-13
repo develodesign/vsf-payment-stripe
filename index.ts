@@ -15,4 +15,4 @@ const moduleConfig: VueStorefrontModuleConfig = {
   beforeRegistration
 }
 
-export const Example = new VueStorefrontModule(moduleConfig)
+export const Stripe = new VueStorefrontModule(moduleConfig)

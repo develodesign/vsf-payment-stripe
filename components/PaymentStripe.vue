@@ -65,7 +65,7 @@ export default {
       }
 
       // Create a new Stripe client.
-      this.stripe.instance = window.Stripe(config.apiKey)
+      this.stripe.instance = window.Stripe(config.stripe.apiKey)
 
       // Create an instance of Elements.
       this.stripe.elements = this.stripe.instance.elements()

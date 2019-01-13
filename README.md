@@ -33,6 +33,27 @@ export const registerModules: VueStorefrontModule[] = [
 ]
 ```
 
+## Integration the Stripe component to you theme
+
+```js
+import PaymentStripe from 'src/modules/stripe/components/PaymentStripe'
+
+export default {
+  components: {
+    ...
+    PaymentStripe
+  },
+```
+
+Add to template `<payment-stripe />`
+
+```html
+<div class="cartsummary-wrapper">
+    ...
+    <payment-stripe />
+</div>
+```
+
 ## Customization
 
 You can also customize the appearance of Stripe elements using the `style` key using any of the official stripe style properties found [here](https://stripe.com/docs/stripe-js/reference#stripe-elements).

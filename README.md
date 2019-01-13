@@ -2,46 +2,51 @@
 
 Stripe Payment extension for [vue-storefront](https://github.com/DivanteLtd/vue-storefront), by [Develo Design](https://develodesign.co.uk).
 
-## Installation using NPM:
+## Installation
 
-Add the extension to your Vue Storefront `package.json` using:
+By hand (preferer):
 ```shell
-$ npm install vsf-payment-stripe --save
+git clone git@github.com:develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/stripe
 ```
 
-Add `vsf-payment-stripe` to the  `extensions/index.js`
-```js
-export default [
-  require('@vue-storefront/extension-droppoint-shipping/index.js'),
-  require('@vue-storefront/extension-google-analytics/index.js'),
-  require('@vue-storefront/extension-mailchimp-subscribe/index.js'),
-  require('@vue-storefront/extension-payment-backend-methods/index.js'),
-  require('@vue-storefront/extension-payment-cash-on-delivery/index.js'),
-  require('@vue-storefront/extension-template/index.js'),
+Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
 
-  require('vsf-payment-stripe/index.js')
-]
-```
-
-Add the following also to your `config/local.json` and configure the `stripe.api_key` to point to your Stripe details.
-```js
+```json
 "stripe": {
-    "api_key": "my_example_api_key"
+    "apiKey": "my_example_api_key"
 }
 ```
 
-You can also customize the appearance of Stripe elements using the `style` key using any of the official stripe style properties found [here](https://stripe.com/docs/stripe-js/reference#stripe-elements).
+## Registration the Stripe module
+
+Add script import to `./src/modules/index.ts`
+
 ```js
+...
+import { GoogleAnalytics } from './google-analytics';
+import { Stripe } from './stripe';
+
+export const registerModules: VueStorefrontModule[] = [
+  ...
+  GoogleAnalytics,
+  Stripe
+]
+```
+
+## Customization
+
+You can also customize the appearance of Stripe elements using the `style` key using any of the official stripe style properties found [here](https://stripe.com/docs/stripe-js/reference#stripe-elements).
+```json
 "stripe": {
-    "api_key": "my_example_api_key",
+    "apiKey": "my_example_api_key",
     "style": {
         "base": {
             "fontSize": "16px",
             "color": "#32325d"
-          },
-          "invalid": {
-              "color": "#fa755a"
-          }
+        },
+        "invalid": {
+            "color": "#fa755a"
+        }
     }
 }
 ```

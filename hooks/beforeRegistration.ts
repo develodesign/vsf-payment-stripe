@@ -13,6 +13,14 @@ export function beforeRegistration(Vue, config, store, isServer) {
 
   if (!Vue.prototype.$isServer) {
 
+    // Load the stripe.js elements script.
+    let apiUrl = 'https://js.stripe.com/v3/'
+    let docHead = document.getElementsByTagName('head')[0]
+    let docScript = document.createElement('script')
+    docScript.type = 'text/javascript'
+    docScript.src = apiUrl
+    docHead.appendChild(docScript)
+
     store.watch((state) => state.checkout.paymentDetails, (prevMethodCode, newMethodCode) => {
       let method = (newMethodCode === VSF_PAYMENT_CODE) ? '$on' : '$off'
       // Register/unregister the handler for what happens when they click the place order button.

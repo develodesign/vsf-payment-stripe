@@ -37,17 +37,14 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```js
 import PaymentStripe from 'src/modules/stripe/components/PaymentStripe'
+import MixinStripe from 'src/modules/stripe/components/MixinStripe'
 
 export default {
   components: {
     ...
     PaymentStripe
   },
-  data () {
-    return {
-      payment: this.$store.state.checkout.paymentDetails
-    }
-  },
+  mixins: [..., MixinStripe],
 ```
 
 Then need add component instance before `<div id="checkout-order-review-additional-container">` to template section

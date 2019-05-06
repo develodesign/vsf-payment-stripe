@@ -1,5 +1,5 @@
 
-import rootStore from '@vue-storefront/store'
+import rootStore from '@vue-storefront/core/store'
 
 export default {
   data () {

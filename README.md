@@ -73,3 +73,16 @@ You can also customize the appearance of Stripe elements using the `style` key u
     }
 }
 ```
+
+## Backend Platform Support
+Each back-end platform handles Stripe payment method processing in its own way. Due to this, it is difficult to support all platforms until each one has been specifically tested and accounted for. The following back-end platforms are supported.
+
+* **Magento 2** (partial support). The official Stripe module for Magento 2 does not currently support checkout via API, so there are some adjustments that need to be made on their side before this module will be fully supported on Magento 2.
+
+To specify your backend platform for this module to handle it, if it is supported, add the `backend_platform` attribute in `config/local.json`. For example:
+```json
+"stripe": {
+    "apiKey": "my_example_api_key",
+    "backend_platform": "magento2"
+}
+```

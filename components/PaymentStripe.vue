@@ -105,21 +105,41 @@ export default {
       // Display loader
       this.$bus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
 
-      // Generate token from stripe
-      this.stripe.instance.createToken(this.stripe.card).then((result) => {
+      // Create payment method with Stripe
+      this.stripe.instance.createPaymentMethod('card', this.stripe.card).then((result) => {
         if (result.error) {
           // Inform the user if there was an error.
           let errorElement = document.getElementById('vsf-stripe-card-errors')
 
           errorElement.textContent = result.error.message
         } else {
-          self.placeOrderWithPayload(result.token)
+          self.placeOrderWithPayload(
+            this.formatTokenPayload(result.token)
+          )
         }
         self.$bus.$emit('notification-progress-stop')
       })
     },
     placeOrderWithPayload (payload) {
       this.$bus.$emit('checkout-do-placeOrder', payload)
+    },
+    /**
+     * Format the returned token data
+     * according to the platform's requirements
+     * @param {any} token Token data from Stripe
+     */
+    formatTokenPayload (token) {
+      let platform = (typeof config.stripe.backend_platform !== 'undefined') ? config.stripe.backend_platform : 'default';
+
+      switch (platform) {
+        case 'magento2':
+          return token.paymentMethod.id + ':' + token.paymentMethod.card.brand + ':' + token.paymentMethod.card.last4
+          break;
+
+        default:
+          return token // just return all data if platform not found or specified
+          break;
+      }
     }
   }
 }

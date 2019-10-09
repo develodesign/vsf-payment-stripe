@@ -113,9 +113,7 @@ export default {
 
           errorElement.textContent = result.error.message
         } else {
-          self.placeOrderWithPayload(
-            this.formatTokenPayload(result.token)
-          )
+          self.placeOrderWithPayload(this.formatTokenPayload(result.paymentMethod))
         }
         self.$bus.$emit('notification-progress-stop')
       })
@@ -123,23 +121,9 @@ export default {
     placeOrderWithPayload (payload) {
       this.$bus.$emit('checkout-do-placeOrder', payload)
     },
-    /**
-     * Format the returned token data
-     * according to the platform's requirements
-     * @param {any} token Token data from Stripe
-     */
     formatTokenPayload (token) {
-      let platform = (typeof config.stripe.backend_platform !== 'undefined') ? config.stripe.backend_platform : 'default';
-
-      switch (platform) {
-        case 'magento2':
-          return token.paymentMethod.id + ':' + token.paymentMethod.card.brand + ':' + token.paymentMethod.card.last4
-          break;
-
-        default:
-          return token // just return all data if platform not found or specified
-          break;
-      }
+      let platform = (typeof config.stripe.backend_platform !== 'undefined') ? config.stripe.backend_platform : 'default'
+      return platform === 'magento2' ? `${token.id}:${token.card.brand}:${token.card.last4}` : token
     }
   }
 }

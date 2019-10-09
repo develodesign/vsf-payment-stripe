@@ -35,6 +35,8 @@ export const registerModules: VueStorefrontModule[] = [
 
 ## Integration the Stripe component to you theme
 
+Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/OrderReview.vue`
+
 ```js
 import PaymentStripe from 'src/modules/stripe/components/PaymentStripe'
 import MixinStripe from 'src/modules/stripe/components/MixinStripe'

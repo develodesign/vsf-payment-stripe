@@ -1,5 +1,5 @@
 {
-  "name": "vsf-payment-stripe",
+  "name": "@develodesign/vsf-payment-stripe",
   "version": "2.2.0",
   "description": "A Stripe extension built for vue-storefront, by Develo Design.",
   "main": "lib/index.js",

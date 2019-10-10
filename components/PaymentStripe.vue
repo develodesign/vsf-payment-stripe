@@ -126,7 +126,7 @@ export default {
     },
     formatTokenPayload (token) {
       let platform = this.stripeConfig.hasOwnProperty('backendPlatform') ? this.stripeConfig.backendPlatform : 'default'
-      return platform === 'magento2' ? `${token.id}:${token.card.brand}:${token.card.last4}` : token
+      return platform === 'magento2' ? [`${token.id}:${token.card.brand}:${token.card.last4}`] : token
     }
   }
 }

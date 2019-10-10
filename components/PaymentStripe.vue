@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import config from 'config'
+import { mapState } from 'vuex'
 import i18n from '@vue-storefront/i18n'
 
 export default {
@@ -41,6 +41,9 @@ export default {
       }
     }
   },
+  computed: mapState({
+    stripeConfig: state => state.config.stripe
+  }),
   mounted () {
     this.configureStripe()
 
@@ -60,12 +63,12 @@ export default {
       this.processStripeForm()
     },
     configureStripe () {
-      if (!config.hasOwnProperty('stripe') || typeof config.stripe.apiKey === 'undefined') {
+      if (!this.stripeConfig.hasOwnProperty('apiKey')) {
         return false
       }
 
       // Create a new Stripe client.
-      this.stripe.instance = window.Stripe(config.stripe.apiKey)
+      this.stripe.instance = window.Stripe(this.stripeConfig.apiKey)
 
       // Create an instance of Elements.
       this.stripe.elements = this.stripe.instance.elements()
@@ -77,7 +80,7 @@ export default {
       this.bindEventListeners()
     },
     createElements () {
-      let style = (typeof config.stripe.style !== 'undefined') ? config.stripe.style : {}
+      let style = this.stripeConfig.hasOwnProperty('style') ? this.stripeConfig.style : {}
 
       // Create an instance of the card Element.
       this.stripe.card = this.stripe.elements.create('card', { style: style })
@@ -122,7 +125,7 @@ export default {
       this.$bus.$emit('checkout-do-placeOrder', payload)
     },
     formatTokenPayload (token) {
-      let platform = (typeof config.stripe.backend_platform !== 'undefined') ? config.stripe.backend_platform : 'default'
+      let platform = this.stripeConfig.hasOwnProperty('backendPlatform') ? this.stripeConfig.backendPlatform : 'default'
       return platform === 'magento2' ? `${token.id}:${token.card.brand}:${token.card.last4}` : token
     }
   }

@@ -1,5 +1,5 @@
 // This function will be fired both on server and client side context before registering other parts of the module
-export function beforeRegistration(Vue, config, store, isServer) {
+export function beforeRegistration({ Vue, config, store, isServer }) {
   const VSF_PAYMENT_CODE = 'stripe'
 
   store.dispatch('payment/addMethod', {

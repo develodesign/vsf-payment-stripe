@@ -1,7 +1,6 @@
 // This is VS module entry point.
 // Read more about modules: https://github.com/DivanteLtd/vue-storefront/blob/master/doc/api-modules/about-modules.md
 import { createModule } from '@vue-storefront/core/lib/module'
-import { module } from './store'
 import { beforeRegistration } from './hooks/beforeRegistration'
 
 // This key will be used for creating extension keys in vuex and other key-based plugins.
@@ -9,6 +8,5 @@ import { beforeRegistration } from './hooks/beforeRegistration'
 export const KEY = 'stripe'
 export const Stripe = createModule({
   key: KEY,
-  store: { modules: [{ key: KEY, module }] },
   beforeRegistration
 })

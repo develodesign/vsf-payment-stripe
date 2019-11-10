@@ -1,6 +1,6 @@
 // This function will be fired both on server and client side context before registering other parts of the module
 export function beforeRegistration({ Vue, config, store, isServer }) {
-  const VSF_PAYMENT_CODE = 'stripe'
+  const VSF_PAYMENT_CODE = config.stripe.paymentMethodCode || 'stripe'
 
   store.dispatch('payment/addMethod', {
     'title': 'Stripe',
@@ -11,7 +11,7 @@ export function beforeRegistration({ Vue, config, store, isServer }) {
     'offline': false
   })
 
-  if (!Vue.prototype.$isServer) {
+  if (!isServer) {
 
     // Load the stripe.js elements script.
     let apiUrl = 'https://js.stripe.com/v3/'

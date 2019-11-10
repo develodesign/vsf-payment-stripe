@@ -1,6 +1,6 @@
 {
   "name": "@develodesign/vsf-payment-stripe",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A Stripe extension built for vue-storefront, by Develo Design.",
   "main": "lib/index.js",
   "directories": {
@@ -24,7 +24,8 @@
   "author": "Mike Sheward <mike@develodesign.co.uk> (https://www.develodesign.co.uk)",
   "maintainers": [
     "Luke Collymore <luke@develodesign.co.uk> (https://www.develodesign.co.uk)",
-    "Mike Sheward <mike@develodesign.co.uk> (https://www.develodesign.co.uk)"
+    "Mike Sheward <mike@develodesign.co.uk> (https://www.develodesign.co.uk)",
+    "Dmitry Schegolikhin <d.shegolihin@gmail.com> (https://www.develodesign.co.uk)"
   ],
   "license": "MIT",
   "bugs": {

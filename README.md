@@ -85,6 +85,6 @@ To specify your backend platform for this module to handle it, if it is supporte
 ```json
 "stripe": {
     "apiKey": "my_example_api_key",
-    "backend_platform": "magento2"
-}
+    "backend_platform": "magento2",
+    "paymentMethodCode": "stripe"
 ```

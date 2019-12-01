@@ -45,7 +45,9 @@ export default {
     stripeConfig: state => state.config.stripe
   }),
   mounted () {
-    this.configureStripe()
+    // Load the stripe.js elements script.
+    // As it's callback, Configure stripe to run.
+    this.loadStripeDependencies(this.configureStripe)
 
     // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
     this.$bus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
@@ -61,6 +63,18 @@ export default {
   methods: {
     onBeforePlaceOrder () {
       this.processStripeForm()
+    },
+    loadStripeDependencies (callback) {
+      let stripeJsUrl = 'https://js.stripe.com/v3/'
+      let docHead = document.getElementsByTagName('head')[0]
+      let docScript = document.createElement('script')
+      docScript.type = 'text/javascript'
+      docScript.src = stripeJsUrl
+
+      // When script is ready fire our callback.
+      docScript.onreadystatechange = callback
+      docScript.onload = callback
+      docHead.appendChild(docScript)
     },
     configureStripe () {
       if (!this.stripeConfig.hasOwnProperty('apiKey')) {

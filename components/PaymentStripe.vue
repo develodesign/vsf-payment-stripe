@@ -44,6 +44,12 @@ export default {
   computed: mapState({
     stripeConfig: state => state.config.stripe
   }),
+  beforeMount () {
+    this.$bus.$on('order-after-placed', this.onAfterPlaceOrder)
+  },
+  beforeDestroy () {
+    this.$bus.$off('order-after-placed', this.onAfterPlaceOrder)
+  },
   mounted () {
     // Load the stripe.js elements script.
     // As it's callback, Configure stripe to run.
@@ -61,6 +67,10 @@ export default {
     })
   },
   methods: {
+    onAfterPlaceOrder () {
+      // Stop display loader
+      this.$bus.$emit('notification-progress-stop')
+    },
     onBeforePlaceOrder () {
       this.processStripeForm()
     },
@@ -119,7 +129,7 @@ export default {
     processStripeForm () {
       let self = this
 
-      // Display loader
+      // Start display loader
       this.$bus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
 
       // Create payment method with Stripe
@@ -132,7 +142,6 @@ export default {
         } else {
           self.placeOrderWithPayload(this.formatTokenPayload(result.paymentMethod))
         }
-        self.$bus.$emit('notification-progress-stop')
       })
     },
     placeOrderWithPayload (payload) {

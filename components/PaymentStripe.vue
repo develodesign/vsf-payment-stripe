@@ -139,6 +139,9 @@ export default {
           let errorElement = document.getElementById('vsf-stripe-card-errors')
 
           errorElement.textContent = result.error.message
+
+          // Stop display loader
+          this.$bus.$emit('notification-progress-stop')
         } else {
           self.placeOrderWithPayload(this.formatTokenPayload(result.paymentMethod))
         }

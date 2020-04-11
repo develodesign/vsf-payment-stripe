@@ -1,12 +1,45 @@
-// This is VS module entry point.
-// Read more about modules: https://github.com/DivanteLtd/vue-storefront/blob/master/doc/api-modules/about-modules.md
-import { createModule } from '@vue-storefront/core/lib/module'
-import { beforeRegistration } from './hooks/beforeRegistration'
+import { StorefrontModule } from '@vue-storefront/core/lib/modules'
+import { isServer } from '@vue-storefront/core/helpers'
+import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus'
 
-// This key will be used for creating extension keys in vuex and other key-based plugins.
-// In case of conflicting keys across modules they'll be merged in favor of the least recently registered one
-export const KEY = 'stripe'
-export const Stripe = createModule({
-  key: KEY,
-  beforeRegistration
-})
+export const PaymentStripeModule: StorefrontModule = function ({store, router, appConfig}) {
+
+  const VSF_PAYMENT_CODE = appConfig.stripe.paymentMethodCode || 'stripe'
+
+  // Place the order. Payload is empty as we don't have any specific info to add for this payment method '{}'
+  let correctPaymentMethod = false
+  const placeOrder = () => {
+    if (correctPaymentMethod) {
+      EventBus.$emit('checkout-do-placeOrder', {})
+    }
+  }
+
+  // Update the methods
+  let paymentMethodConfig = {
+    'title': 'Pay by Card (Stripe)',
+    'code': VSF_PAYMENT_CODE,
+    'cost': 0,
+    'costInclTax': 0,
+    'default': false,
+    'offline': false,
+    'is_server_method': false
+  }
+  store.dispatch('checkout/addPaymentMethod', paymentMethodConfig)
+
+  if (!isServer) {
+    EventBus.$on('checkout-before-placeOrder', placeOrder)
+
+    EventBus.$on('checkout-payment-method-changed', (paymentMethodCode) => {
+      let methods = store.state['payment-backend-methods'].methods
+      if (methods) {
+        let method = methods.find(item => (item.code === paymentMethodCode))
+        if (paymentMethodCode === VSF_PAYMENT_CODE && ((typeof method !== 'undefined' && !method.is_server_method) || typeof method === 'undefined') /* otherwise it could be a `payment-backend-methods` module */) {
+          correctPaymentMethod = true
+        } else {
+          correctPaymentMethod = false
+        }
+      }
+    })
+  }
+
+}

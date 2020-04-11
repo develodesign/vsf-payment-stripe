@@ -29,6 +29,7 @@
 <script>
 import { mapState } from 'vuex'
 import i18n from '@vue-storefront/i18n'
+import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus'
 
 export default {
   name: 'PaymentStripe',
@@ -45,10 +46,13 @@ export default {
     stripeConfig: state => state.config.stripe
   }),
   beforeMount () {
-    this.$bus.$on('order-after-placed', this.onAfterPlaceOrder)
+    EventBus.$on('order-after-placed', this.onAfterPlaceOrder)
+    // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
+    EventBus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
   },
   beforeDestroy () {
-    this.$bus.$off('order-after-placed', this.onAfterPlaceOrder)
+    EventBus.$off('order-after-placed', this.onAfterPlaceOrder)
+    EventBus.$off('checkout-before-placeOrder', this.onBeforePlaceOrder)
   },
   mounted () {
     // Load the stripe.js elements script.
@@ -56,20 +60,17 @@ export default {
     this.loadStripeDependencies(this.configureStripe)
 
     // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
-    this.$bus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
-
-    // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
-    this.$bus.$on('checkout-payment-method-changed', (paymentMethodCode) => {
-      if (paymentMethodCode !== 'stripe') {
+    EventBus.$on('checkout-payment-method-changed', (paymentMethodCode) => {
+      if (paymentMethodCode !== this.stripeConfig.paymentMethodCode) {
         // unregister the extension placeorder handler
-        this.$bus.$off('checkout-before-placeOrder', this.onBeforePlaceOrder)
+        EventBus.$off('checkout-before-placeOrder', this.onBeforePlaceOrder)
       }
     })
   },
   methods: {
     onAfterPlaceOrder () {
       // Stop display loader
-      this.$bus.$emit('notification-progress-stop')
+      EventBus.$emit('notification-progress-stop')
     },
     onBeforePlaceOrder () {
       this.processStripeForm()
@@ -130,7 +131,7 @@ export default {
       let self = this
 
       // Start display loader
-      this.$bus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
+      EventBus.$emit('notification-progress-start', [i18n.t('Placing Order'), '...'].join(''))
 
       // Create payment method with Stripe
       this.stripe.instance.createPaymentMethod('card', this.stripe.card).then((result) => {
@@ -141,14 +142,14 @@ export default {
           errorElement.textContent = result.error.message
 
           // Stop display loader
-          this.$bus.$emit('notification-progress-stop')
+          EventBus.$emit('notification-progress-stop')
         } else {
           self.placeOrderWithPayload(this.formatTokenPayload(result.paymentMethod))
         }
       })
     },
     placeOrderWithPayload (payload) {
-      this.$bus.$emit('checkout-do-placeOrder', payload)
+      EventBus.$emit('checkout-do-placeOrder', payload)
     },
     formatTokenPayload (token) {
       let platform = this.stripeConfig.hasOwnProperty('backendPlatform') ? this.stripeConfig.backendPlatform : 'default'

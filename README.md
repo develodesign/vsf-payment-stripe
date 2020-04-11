@@ -10,7 +10,7 @@ yarn add https://github.com/develodesign/vsf-payment-stripe
 
 By hand:
 ```shell
-git clone git@github.com:develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/stripe
+git clone git@github.com:develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/payment-stripe
 ```
 
 Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
@@ -23,18 +23,15 @@ Add the following also to your `config/local.json` and configure the `stripe.api
 
 ## Registration the Stripe module
 
-Add script import to `./src/modules/index.ts`
+Add script import to `./src/modules/client.ts`
 
 ```js
-...
-import { GoogleAnalytics } from './google-analytics';
-import { Stripe } from './stripe';
+import { PaymentStripeModule } from './payment-stripe'
 
-export const registerModules: VueStorefrontModule[] = [
+export function registerClientModules () {
   ...
-  GoogleAnalytics,
-  Stripe
-]
+  PaymentStripeModule
+}
 ```
 
 ## Integration the Stripe component to you theme
@@ -42,22 +39,26 @@ export const registerModules: VueStorefrontModule[] = [
 Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/OrderReview.vue`
 
 ```js
-import PaymentStripe from 'src/modules/stripe/components/PaymentStripe'
-import MixinStripe from 'src/modules/stripe/components/MixinStripe'
+import { mapGetters } from 'vuex'
+import PaymentStripe from 'src/modules/payment-stripe/components/PaymentStripe'
 
 export default {
   components: {
-    ...
+    ...,
     PaymentStripe
   },
-  mixins: [..., MixinStripe],
+  computed: {
+    ...mapGetters({
+      paymentDetails: 'checkout/getPaymentDetails'
+    })
+  },
 ```
 
 Then need add component instance before `<div id="checkout-order-review-additional-container">` to template section
 
 ```html
 ...
-<payment-stripe v-if="payment.paymentMethod === 'stripe_payments'" />
+<payment-stripe v-if="paymentDetails.paymentMethod === 'stripe_payments'" />
 <div id="checkout-order-review-additional-container">
 ...
 ```

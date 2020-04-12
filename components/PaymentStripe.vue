@@ -46,27 +46,27 @@ export default {
   }),
   beforeMount () {
     this.$bus.$on('order-after-placed', this.onAfterPlaceOrder)
+    // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens etc.
+    this.$bus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
+    this.$bus.$on('checkout-payment-method-changed', this.onPaymentMethodChanged)
   },
   beforeDestroy () {
     this.$bus.$off('order-after-placed', this.onAfterPlaceOrder)
+    this.$bus.$off('checkout-before-placeOrder', this.onBeforePlaceOrder)
+    this.$bus.$off('checkout-payment-method-changed', this.onPaymentMethodChanged)
   },
   mounted () {
     // Load the stripe.js elements script.
     // As it's callback, Configure stripe to run.
     this.loadStripeDependencies(this.configureStripe)
-
-    // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
-    this.$bus.$on('checkout-before-placeOrder', this.onBeforePlaceOrder)
-
-    // Ready to place order, handle anything we need to, generating, validating stripe requests & tokens ect.
-    this.$bus.$on('checkout-payment-method-changed', (paymentMethodCode) => {
-      if (paymentMethodCode !== 'stripe') {
+  },
+  methods: {
+    onPaymentMethodChanged (methodCode) {
+      if (methodCode !== this.stripeConfig.paymentMethodCode) {
         // unregister the extension placeorder handler
         this.$bus.$off('checkout-before-placeOrder', this.onBeforePlaceOrder)
       }
-    })
-  },
-  methods: {
+    },
     onAfterPlaceOrder () {
       // Stop display loader
       this.$bus.$emit('notification-progress-stop')

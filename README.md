@@ -21,7 +21,7 @@ Add the following also to your `config/local.json` and configure the `stripe.api
 }
 ```
 
-## Registering of the Stripe module
+## Registering the Stripe module
 
 Add script import to `./src/modules/client.ts`
 

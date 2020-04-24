@@ -81,6 +81,25 @@ You can also customize the appearance of Stripe elements using the `style` key u
 }
 ```
 
+You can specifiy the card initialisation options with the `options` key. You can pass any the properites found [here](https://stripe.com/docs/js/elements_object/create_element?type=card)
+```json
+"stripe": {
+    "apiKey": "my_example_api_key",
+    "style": {
+        "base": {
+            "fontSize": "16px",
+            "color": "#32325d"
+        },
+        "invalid": {
+            "color": "#fa755a"
+        }
+    },
+    "options": {
+        "hidePostalCode": true
+    }
+}
+```
+
 ## Backend Platform Support
 Each back-end platform handles Stripe payment method processing in its own way. Due to this, it is difficult to support all platforms until each one has been specifically tested and accounted for. The following back-end platforms are supported.
 

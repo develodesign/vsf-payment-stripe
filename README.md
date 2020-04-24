@@ -10,7 +10,7 @@ yarn add https://github.com/develodesign/vsf-payment-stripe
 
 By hand:
 ```shell
-git clone git@github.com:develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/payment-stripe
+git clone https://github.com/develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/payment-stripe
 ```
 
 Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
@@ -21,7 +21,7 @@ Add the following also to your `config/local.json` and configure the `stripe.api
 }
 ```
 
-## Registration the Stripe module
+## Registering of the Stripe module
 
 Add script import to `./src/modules/client.ts`
 
@@ -34,7 +34,7 @@ export function registerClientModules () {
 }
 ```
 
-## Integration the Stripe component to you theme
+## Integrating the Stripe component with your theme
 
 Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/OrderReview.vue`
 

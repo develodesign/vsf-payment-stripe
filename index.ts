@@ -1,6 +1,5 @@
 import { StorefrontModule } from '@vue-storefront/core/lib/modules'
 import { isServer } from '@vue-storefront/core/helpers'
-import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus'
 
 export const PaymentStripeModule: StorefrontModule = function ({store, router, appConfig}) {
 

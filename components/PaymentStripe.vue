@@ -106,9 +106,14 @@ export default {
     },
     createElements () {
       let style = this.stripeConfig.hasOwnProperty('style') ? this.stripeConfig.style : {}
-
+      let options = this.stripeConfig.hasOwnProperty('options') ? this.stripeConfig.options : {};
+      let cardOptions = {};
+      cardOptions.style = style;
+      Object.keys(options).forEach(function (option) {
+        cardOptions[option] = options[option];
+      });
       // Create an instance of the card Element.
-      this.stripe.card = this.stripe.elements.create('card', { style: style })
+      this.stripe.card = this.stripe.elements.create('card', cardOptions)
 
       // Add an instance of the card Element into the `card-element` <div>.
       this.stripe.card.mount('#vsf-stripe-card-element')

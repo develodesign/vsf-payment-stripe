@@ -136,4 +136,5 @@ To specify your backend platform for this module to handle it, if it is supporte
     "apiKey": "my_example_api_key",
     "backendPlatform": "magento2",
     "paymentMethodCode": "stripe_payments"
+}
 ```

@@ -13,6 +13,7 @@ git clone https://github.com/develodesign/vsf-payment-stripe.git ./vue-storefron
 
 By yarn:
 ```shell
+cd storefront/src/themes/default
 yarn add https://github.com/develodesign/vsf-payment-stripe
 ```
 

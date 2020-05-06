@@ -2,8 +2,7 @@
 
 Stripe Payment extension for [vue-storefront](https://github.com/DivanteLtd/vue-storefront), by [Develo Design](https://develodesign.co.uk).
 
-Demo.
-![Imgur](https://i.imgur.com/gieM71M.png)
+![Imgur](https://i.imgur.com/nLbTi6N.png)
 
 ## Installation
 

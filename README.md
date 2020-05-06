@@ -4,13 +4,14 @@ Stripe Payment extension for [vue-storefront](https://github.com/DivanteLtd/vue-
 
 ## Installation
 
-```shell
-yarn add https://github.com/develodesign/vsf-payment-stripe
-```
-
-By hand:
+By hand (preferred):
 ```shell
 git clone https://github.com/develodesign/vsf-payment-stripe.git ./vue-storefront/src/modules/payment-stripe
+```
+
+By yarn:
+```shell
+yarn add https://github.com/develodesign/vsf-payment-stripe
 ```
 
 Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.

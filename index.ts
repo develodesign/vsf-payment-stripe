@@ -1,5 +1,5 @@
 import { StorefrontModule } from '@vue-storefront/core/lib/modules'
-import { isServer } from '@vue-storefront/core/helpers'
+import i18n from '@vue-storefront/i18n';
 
 export const PaymentStripeModule: StorefrontModule = function ({store, router, appConfig}) {
 
@@ -7,7 +7,7 @@ export const PaymentStripeModule: StorefrontModule = function ({store, router, a
 
   // Update the methods
   let paymentMethodConfig = {
-    'title': 'Pay by Card (Stripe)',
+    'title': i18n.t('Pay by Card (Stripe)'),
     'code': VSF_PAYMENT_CODE,
     'cost': 0,
     'costInclTax': 0,

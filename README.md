@@ -28,6 +28,7 @@ Add script import to `./src/modules/client.ts`
 
 ```js
 import { PaymentStripeModule } from './payment-stripe'
+// import { PaymentStripeModule } from '@develodesign/vsf-payment-stripe'
 
 export function registerClientModules () {
   ...
@@ -37,11 +38,13 @@ export function registerClientModules () {
 
 ## Integrating the Stripe component with your theme
 
-Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/OrderReview.vue`
+Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/Payment.vue`
 
 ```js
 import { mapGetters } from 'vuex'
 import PaymentStripe from 'src/modules/payment-stripe/components/PaymentStripe'
+// import PaymentStripe from '@develodesign/vsf-payment-stripe/components/PaymentStripe'
+
 
 export default {
   components: {
@@ -55,13 +58,32 @@ export default {
   },
 ```
 
-Then need add component instance before `<div id="checkout-order-review-additional-container">` to template section
+Then need add the component instance `<payment-stripe/>` to template section with check on payment method `v-if="paymentDetails.paymentMethod === 'stripe_payments'"`:
 
 ```html
 ...
-<payment-stripe v-if="paymentDetails.paymentMethod === 'stripe_payments'" />
-<div id="checkout-order-review-additional-container">
-...
+<div class="row fs16 mb35">
+    <div class="col-xs-12 h4">
+        ...
+        <div class="col-xs-12">
+            <h4>{{ $t('Payment method') }}</h4>
+        </div>
+        <div class="col-md-6 mb15">
+            <label class="radioStyled"> {{ getPaymentMethod().title }}
+            <input type="radio" value="" checked disabled name="chosen-payment-method">
+            <span class="checkmark" />
+            </label>
+        </div>
+        </div>
+    </div>
+    ...
+    <!-- The stripe method integration -->
+    <div class="row mb35 stripe-container" v-if="paymentDetails.paymentMethod === 'stripe_payments'">
+        <div class="col-xs-12">
+            <payment-stripe/>
+        </div>
+    </div>
+</div>
 ```
 
 ## Customization

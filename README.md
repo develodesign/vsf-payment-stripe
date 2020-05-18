@@ -14,7 +14,7 @@ git clone https://github.com/develodesign/vsf-payment-stripe.git ./vue-storefron
 By yarn:
 ```shell
 cd storefront/src/themes/default
-yarn add https://github.com/develodesign/vsf-payment-stripe
+yarn add https://github.com/develodesign/payment-stripe
 ```
 
 Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
@@ -31,7 +31,6 @@ Add script import to `./src/modules/client.ts`
 
 ```js
 import { PaymentStripeModule } from './payment-stripe'
-// import { PaymentStripeModule } from '@develodesign/vsf-payment-stripe'
 
 export function registerClientModules () {
   ...
@@ -46,8 +45,6 @@ Go to `storefront/src/themes/defalt/components/core/blocks/Checkout/Payment.vue`
 ```js
 import { mapGetters } from 'vuex'
 import PaymentStripe from 'src/modules/payment-stripe/components/PaymentStripe'
-// import PaymentStripe from '@develodesign/vsf-payment-stripe/components/PaymentStripe'
-
 
 export default {
   components: {

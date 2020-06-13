@@ -34,7 +34,7 @@ import { PaymentStripeModule } from './payment-stripe'
 
 export function registerClientModules () {
   ...
-  PaymentStripeModule
+  registerModule(PaymentStripeModule)
 }
 ```
 

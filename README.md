@@ -17,11 +17,11 @@ cd storefront/src/themes/default
 yarn add https://github.com/develodesign/payment-stripe
 ```
 
-Add the following also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
+Add the following **Publishable** API key also to your `config/local.json` and configure the `stripe.apiKey` to point to your Stripe details.
 
 ```json
 "stripe": {
-    "apiKey": "my_example_api_key"
+    "apiKey": "my_publishable_api_key"
 }
 ```
 
